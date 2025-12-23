@@ -23,6 +23,8 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             localStorage.removeItem('access_token');
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('username');
             if (window.location.pathname !== '/') {
                 window.location.href = '/';
             }
@@ -35,6 +37,8 @@ export const login = async (identifier, password) => {
     const response = await api.post('/login', { identifier, password });
     if (response.data.token) {
         localStorage.setItem('access_token', response.data.token);
+        localStorage.setItem('user_role', response.data.role);
+        localStorage.setItem('username', response.data.user);
     }
     return response.data;
 };

@@ -39,6 +39,8 @@ const Dashboard = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('access_token');
+        localStorage.removeItem('user_role');
+        localStorage.removeItem('username');
         navigate('/');
     };
 

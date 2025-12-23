@@ -14,10 +14,15 @@ const Login = () => {
         setError('');
         try {
             const data = await login(identifier, password);
-            // Assuming the backend returns role info, or we just try to nav to dashboard
-            // If the user validates as a doctor, we go to dashboard.
-            // The User request says "if login user role is a doctor... get all patients"
-            navigate('/dashboard');
+            // Check if the user is a doctor
+            if (data.role === 'DOCTOR') {
+                navigate('/dashboard');
+            } else {
+                setError('Only doctors can access this portal');
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user_role');
+                localStorage.removeItem('username');
+            }
         } catch (err) {
             console.error(err);
             setError('Invalid credentials');
