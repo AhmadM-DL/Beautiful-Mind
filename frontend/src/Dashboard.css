@@ -1,0 +1,115 @@
+.dashboard-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.dashboard-container header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.content-area {
+  display: flex;
+  flex-direction: column;
+  /* Changed to column to stack add form on top */
+  gap: 30px;
+}
+
+.patient-list {
+  width: 100%;
+}
+
+.add-patient-panel {
+  width: 100%;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  /* Or 0px if you want sharp here too, but user only specified login/register earlier. Let's keep 8px unless "sharp edges" was global. User said "make the box smaller with sharp edges" for login. I will use 0px to match the theme if desired, but let's stick to clean look. */
+  border: 1px solid #eee;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.patient-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Two columns by default */
+  gap: 20px;
+}
+
+.patient-form-grid .form-group {
+  margin-bottom: 0;
+  /* Let grid handle gap */
+}
+
+.patient-form-grid .full-width {
+  grid-column: span 2;
+}
+
+.patient-form-grid .form-row {
+  grid-column: span 2;
+  display: flex;
+  gap: 20px;
+}
+
+.patient-form-grid .form-row .form-group {
+  flex: 1;
+}
+
+.patient-item {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.patient-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.patient-summary {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.patient-details-form {
+  padding: 20px;
+  background-color: #fafafa;
+  border-top: 1px solid #eee;
+}
+
+.arrow {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+input,
+select,
+textarea {
+  background-color: #fff;
+}
