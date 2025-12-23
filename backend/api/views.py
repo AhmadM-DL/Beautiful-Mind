@@ -85,19 +85,16 @@ class DoctorCreateUpdatePatientView(APIView):
 
         phone_number = request.data.get('patient_phone_number')
         if not phone_number:
-            return Response({'error': 'patient_phone_number is required'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Missing phone number'}, status=status.HTTP_400_BAD_REQUEST)
         
         validate_phone_number(phone_number)
 
-        if Doctor.objects.filter(phone_number=phone_number).exists():
-            return Response({'error': 'Phone number already exists'}, status=status.HTTP_400_BAD_REQUEST)
-        if Patient.objects.filter(phone_number=phone_number).exists():
-            return Response({'error': 'Phone number already exists'}, status=status.HTTP_400_BAD_REQUEST)
-
         medical_id = hash_phone(phone_number)
 
+        if Doctor.objects.filter(phone_number=phone_number).exists():
+            return Response({'error': 'Phone number already exists'}, status=status.HTTP_400_BAD_REQUEST)
         if Patient.objects.filter(medical_id=medical_id).exists():
-            return Response({'error': 'Patient already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Phone number already exists'}, status=status.HTTP_400_BAD_REQUEST)
         
         username = shortuuid.ShortUUID().random(length=12)
         username = username.lower()
@@ -106,6 +103,7 @@ class DoctorCreateUpdatePatientView(APIView):
         user = User.objects.create_user(role='PATIENT', username=username, password=password)
         patient_data = request.data.copy()
         patient_data['display_id'] = display_id
+        patient_data['medical_id'] = medical_id
         serializer = PatientSerializer(data=patient_data)
 
         if serializer.is_valid():

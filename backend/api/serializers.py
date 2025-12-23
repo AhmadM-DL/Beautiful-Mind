@@ -13,8 +13,9 @@ class LoginSerializer(serializers.Serializer):
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ['display_id', 'alias', 'gender', 'age', 'married', 'mental_illness_diagnostic', 'medications', 'smoke', 'weekly_sport_activity', 'occupation']
-
+        fields = ['medical_id', 'display_id', 'alias', 'gender', 'age', 'married', 'mental_illness_diagnostic', 'medications', 'smoke', 'weekly_sport_activity', 'occupation']
+        write_only_fields = ['medical_id']
+        
 class PatientUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
@@ -55,7 +56,8 @@ class DoctorRegistrationSerializer(serializers.ModelSerializer):
         phone_number = validated_data.pop("phone_number")
         if Doctor.objects.filter(phone_number=phone_number).exists():
             raise serializers.ValidationError("Phone number already exists")
-        if Patient.objects.filter(phone_number=phone_number).exists():
+        medical_id = hash_phone(phone_number)
+        if Patient.objects.filter(medical_id=medical_id).exists():
             raise serializers.ValidationError("Phone number already exists")
 
         user = User.objects.create_user(
@@ -63,7 +65,7 @@ class DoctorRegistrationSerializer(serializers.ModelSerializer):
             password=password,
             username=username
         )
-        return Doctor.objects.create(user=user, **validated_data)
+        return Doctor.objects.create(user=user, phone_number=phone_number, **validated_data)
 
 # Voice Note
 

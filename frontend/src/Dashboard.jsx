@@ -9,6 +9,7 @@ const Dashboard = () => {
     const [patients, setPatients] = useState([]);
     const [isAddMode, setIsAddMode] = useState(false);
     const [editingPatient, setEditingPatient] = useState(null); // null means no patient selected for edit
+    const [error, setError] = useState(''); // Error message state
 
     // New patient / Edit patient form state
     const [formData, setFormData] = useState({
@@ -64,14 +65,17 @@ const Dashboard = () => {
         });
         setIsAddMode(false);
         setEditingPatient(null);
+        setError(''); // Clear error when resetting form
     };
 
     const handleAddClick = () => {
         resetForm();
         setIsAddMode(true);
+        setError(''); // Clear any previous errors
     };
 
     const handlePatientClick = (patient) => {
+        setError(''); // Clear any previous errors
         if (editingPatient?.display_id === patient.display_id) {
             // Toggle close
             setEditingPatient(null);
@@ -88,6 +92,7 @@ const Dashboard = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(''); // Clear previous errors
 
         // Sanitize gender just in case legacy state is present
         let cleanData = { ...formData };
@@ -106,8 +111,10 @@ const Dashboard = () => {
             await loadPatients();
             resetForm();
         } catch (err) {
-            alert('Operation failed. Check inputs.');
             console.error(err);
+            // Extract error message from response if available
+            const errorMessage = err.response?.data?.error || 'Operation failed. Please check your inputs.';
+            setError(errorMessage);
         }
     };
 
@@ -132,6 +139,7 @@ const Dashboard = () => {
                             </div>
                             {editingPatient?.display_id === p.display_id && (
                                 <div className="patient-details-form">
+                                    {error && <p className="error">{error}</p>}
                                     <PatientForm
                                         formData={formData}
                                         onChange={handleInputChange}
@@ -147,6 +155,7 @@ const Dashboard = () => {
                 {isAddMode && (
                     <div className="add-patient-panel">
                         <h3>Add New Patient</h3>
+                        {error && <p className="error">{error}</p>}
                         <PatientForm
                             formData={formData}
                             onChange={handleInputChange}
