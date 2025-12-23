@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPatients, createPatient, updatePatient } from './api';
+import CountryCodeSelect from './CountryCodeSelect';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -10,6 +11,7 @@ const Dashboard = () => {
     const [isAddMode, setIsAddMode] = useState(false);
     const [editingPatient, setEditingPatient] = useState(null); // null means no patient selected for edit
     const [error, setError] = useState(''); // Error message state
+    const [countryCode, setCountryCode] = useState('+1'); // Country code for phone number
 
     // New patient / Edit patient form state
     const [formData, setFormData] = useState({
@@ -99,6 +101,11 @@ const Dashboard = () => {
         if (cleanData.gender === 'Male') cleanData.gender = 'M';
         if (cleanData.gender === 'Female') cleanData.gender = 'F';
 
+        // Concatenate country code with phone number for new patients
+        if (isAddMode && cleanData.patient_phone_number) {
+            cleanData.patient_phone_number = countryCode + cleanData.patient_phone_number;
+        }
+
         try {
             if (isAddMode) {
                 await createPatient(cleanData);
@@ -145,6 +152,8 @@ const Dashboard = () => {
                                         onChange={handleInputChange}
                                         onSubmit={handleSubmit}
                                         mode="edit"
+                                        countryCode={countryCode}
+                                        setCountryCode={setCountryCode}
                                     />
                                 </div>
                             )}
@@ -161,6 +170,8 @@ const Dashboard = () => {
                             onChange={handleInputChange}
                             onSubmit={handleSubmit}
                             mode="add"
+                            countryCode={countryCode}
+                            setCountryCode={setCountryCode}
                         />
                         <button className="btn btn-text" onClick={resetForm}>Cancel</button>
                     </div>
@@ -170,31 +181,45 @@ const Dashboard = () => {
     );
 };
 
-const PatientForm = ({ formData, onChange, onSubmit, mode }) => {
+const PatientForm = ({ formData, onChange, onSubmit, mode, countryCode, setCountryCode }) => {
     return (
         <form onSubmit={onSubmit} className="patient-form-grid">
             {mode === 'add' && (
                 <div className="form-group full-width">
-                    <label>Phone Number</label>
-                    <input name="patient_phone_number" value={formData.patient_phone_number} onChange={onChange} required placeholder="Phone Number" />
+                    <label>Phone Number *</label>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', marginTop: '5px' }}>
+                        <CountryCodeSelect
+                            value={countryCode}
+                            onChange={setCountryCode}
+                        />
+                        <input
+                            name="patient_phone_number"
+                            type="tel"
+                            value={formData.patient_phone_number}
+                            onChange={onChange}
+                            required
+                            placeholder="Phone Number"
+                            style={{ flex: 1, marginTop: 0 }}
+                        />
+                    </div>
                 </div>
             )}
 
             <div className="form-row">
                 <div className="form-group">
-                    <label>Alias</label>
+                    <label>Alias *</label>
                     <input name="alias" value={formData.alias} onChange={onChange} required placeholder="Alias" />
                 </div>
                 <div className="form-group">
-                    <label>Age</label>
-                    <input name="age" type="number" value={formData.age} onChange={onChange} placeholder="Age" />
+                    <label>Age *</label>
+                    <input name="age" type="number" value={formData.age} onChange={onChange} required placeholder="Age" />
                 </div>
             </div>
 
             <div className="form-row">
                 <div className="form-group">
-                    <label>Gender</label>
-                    <select name="gender" value={formData.gender} onChange={onChange}>
+                    <label>Gender *</label>
+                    <select name="gender" value={formData.gender} onChange={onChange} required>
                         <option value="">Select Gender</option>
                         <option value="M">Male</option>
                         <option value="F">Female</option>

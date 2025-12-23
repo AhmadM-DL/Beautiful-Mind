@@ -66,9 +66,9 @@ class Patient(models.Model):
         ('F', 'Female'),
         ('O', 'Other'),
     ]
-    alias = models.CharField(max_length=100, blank=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
-    age = models.IntegerField(null=True, blank=True)
+    alias = models.CharField(max_length=100)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    age = models.IntegerField()
     married = models.BooleanField(default=False)
     mental_illness_diagnostic = models.TextField(blank=True)
     medications = models.TextField(blank=True, help_text="List of medications")

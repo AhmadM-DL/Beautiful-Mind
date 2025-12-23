@@ -1,0 +1,121 @@
+.country-code-select {
+    position: relative;
+    width: 140px;
+}
+
+.country-code-button {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius, 4px);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.country-code-button:hover {
+    border-color: #999;
+}
+
+.country-code-button:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.country-code-button .arrow {
+    font-size: 10px;
+    color: #666;
+}
+
+.country-code-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.country-code-search {
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    outline: none;
+}
+
+.country-code-search:focus {
+    border-bottom-color: #4CAF50;
+}
+
+.country-code-list {
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.country-code-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.15s;
+    font-size: 14px;
+}
+
+.country-code-item:hover {
+    background-color: #f5f5f5;
+}
+
+.country-code-item.selected {
+    background-color: #e8f5e9;
+}
+
+.country-code-item .country-name {
+    flex: 1;
+    color: #333;
+}
+
+.country-code-item .country-code {
+    color: #666;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.no-results {
+    padding: 20px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+/* Scrollbar styling */
+.country-code-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.country-code-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.country-code-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.country-code-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
