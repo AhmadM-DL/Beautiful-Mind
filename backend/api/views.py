@@ -89,6 +89,11 @@ class DoctorCreateUpdatePatientView(APIView):
         
         validate_phone_number(phone_number)
 
+        if Doctor.objects.filter(phone_number=phone_number).exists():
+            return Response({'error': 'Phone number already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        if Patient.objects.filter(phone_number=phone_number).exists():
+            return Response({'error': 'Phone number already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
         medical_id = hash_phone(phone_number)
 
         if Patient.objects.filter(medical_id=medical_id).exists():

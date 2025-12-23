@@ -51,6 +51,13 @@ class DoctorRegistrationSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
         username = validated_data.pop("username")
         username = username.lower()
+
+        phone_number = validated_data.pop("phone_number")
+        if Doctor.objects.filter(phone_number=phone_number).exists():
+            raise serializers.ValidationError("Phone number already exists")
+        if Patient.objects.filter(phone_number=phone_number).exists():
+            raise serializers.ValidationError("Phone number already exists")
+
         user = User.objects.create_user(
             role="DOCTOR",
             password=password,
