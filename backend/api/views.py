@@ -69,6 +69,7 @@ class PatientLoginByPhoneNumberView(APIView):
 class DoctorRegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request):
+        
         serializer = DoctorRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
@@ -94,6 +95,7 @@ class DoctorCreateUpdatePatientView(APIView):
             return Response({'error': 'Patient already exists'}, status=status.HTTP_400_BAD_REQUEST)
         
         username = shortuuid.ShortUUID().random(length=12)
+        username = username.lower()
         password = shortuuid.ShortUUID().random(length=12)
         display_id = shortuuid.ShortUUID().random(length=12)
         user = User.objects.create_user(role='PATIENT', username=username, password=password)
