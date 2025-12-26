@@ -18,7 +18,6 @@ services:
       - DB_PORT=5432
     depends_on:
       - db
-
   frontend:
     build:
       context: ./frontend
@@ -30,7 +29,6 @@ services:
       - "5173:5173"
     environment:
       - CHOKIDAR_USEPOLLING=true
-
   db:
     image: postgres:15
     volumes:
@@ -39,6 +37,23 @@ services:
       - POSTGRES_DB=beautifulmind
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  ai:
+    build:
+      context: ./ai
+    ports:
+      - "8001:8000"
+    environment:
+      - OPENAI_API_KEY=/run/secrets/openai_api_key
+      - OPENAI_CHAT_MODEL=gpt-4o-mini
+      - OPENAI_STT_MODEL=whisper-1
+    secrets:
+      - openai_api_key
+
+secrets:
+  openai_api_key:
+    file: ./secrets/openai_api_key.txt
 
 volumes:
   postgres_data:
+
+
