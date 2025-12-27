@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, Patient, Doctor, VoiceNote
+from .models import User, Patient, Doctor, Note
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
@@ -21,6 +21,7 @@ class PatientAdmin(admin.ModelAdmin):
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'phone_number')
 
-@admin.register(VoiceNote)
+@admin.register(Note)
 class VoiceNoteAdmin(admin.ModelAdmin):
     list_display = ('patient', 'create_date')
+

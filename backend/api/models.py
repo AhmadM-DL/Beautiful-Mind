@@ -89,8 +89,8 @@ class Doctor(models.Model):
     def __str__(self):
         return self.user.username
 
-class VoiceNote(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='voice_notes')
+class Note(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='notes')
     note = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
 

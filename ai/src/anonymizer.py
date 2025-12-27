@@ -13,7 +13,7 @@ class AnonymizerService:
             self.client = OpenAI(api_key=OPENAI_API_KEY)
         except Exception as e:
             logger.error("Failed to initialize OpenAI client: %s", e)
-            raise ServiceException("Failed to initialize OpenAI client")
+            raise ServiceException(f"Failed to initialize OpenAI client: {e}")
         self.model = OPENAI_CHAT_MODEL
 
     def anonymize(self, text: str) -> str:
@@ -23,7 +23,7 @@ class AnonymizerService:
             "Return the result ONLY as a JSON object with a key 'entities' containing a list of objects, "
             "each containing 'text' (the original name) and 'type' for types person and place use the language of the text"
             "For example if the text is in Arabic return the type in Arabic"
-            "If no entities are found, return {'entities': []}.\n\n"
+            'If no entities are found, return {"entities": []}.\n\n'
             f"Text: {text}"
         )
 
@@ -34,15 +34,15 @@ class AnonymizerService:
             )
         except Exception as e:
             logger.error("Failed to get response from OpenAI: %s", e)
-            raise ServiceException("Failed to get response from OpenAI")
+            raise ServiceException(f"Failed to get response from OpenAI: {e}")
 
         content = response.choices[0].message.content
         try:
             data = json.loads(content)
             entities = data.get("entities") 
         except Exception as e:
-            logger.error("Failed to parse response from OpenAI: %s", e)
-            raise ServiceException("Failed to parse response from OpenAI")
+            logger.error("Failed to parse response %s from OpenAI: %s", content, e)
+            raise ServiceException(f"Failed to parse response from OpenAI: {e}")
 
         anonymized_text = text
         for entity in entities:

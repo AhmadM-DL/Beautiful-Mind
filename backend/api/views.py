@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions, generics
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate, get_user_model
-from .models import Doctor, Patient, VoiceNote, hash_phone
+from .models import Doctor, Patient, Note, hash_phone
 from django.db.models import Q
 from .serializers import *
 import shortuuid
@@ -58,10 +58,23 @@ class PatientLoginByPhoneNumberView(APIView):
             try:
                 patient = Patient.objects.get(medical_id=medical_id)
                 user = patient.user
-                tokens = get_tokens_for_user(user)
-                return Response(tokens)
+                token = get_tokens_for_user(user).get('access')
+                return Response({"token": token})
             except Patient.DoesNotExist:
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AddNoteView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request):
+        if not hasattr(request.user, 'patient_profile'):
+            return Response({'error': 'Not a patient'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = NoteSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            patient = user.patient_profile
+            serializer.save(patient=patient)
+            return Response({'status': 'Note added'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Doctor
