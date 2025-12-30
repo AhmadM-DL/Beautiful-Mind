@@ -7,7 +7,24 @@ import logging
 logger = logging.getLogger(__name__)
 
 class OrchestrationService():
-    def process_voice_note(self, phone_number: str, base64_audio: str):
+
+    def login_by_phone(self, phone_number: str):
+        logger.info("Login attempt...")
+        try:
+            login_resp = requests.post(
+                f"{BACKEND_SERVICE_URL}/api/patient/login-by-phone-number",
+                json={
+                    "phone_number": phone_number,
+                }
+            )
+            login_resp.raise_for_status()
+            token = login_resp.json().get("token")
+            return token
+        except Exception as e:
+            logger.error(f"Backend Login Error: {e}")
+            raise ServiceException(f"Backend Login Error: {e}")
+            
+    def process_voice_note(self, token: str, base64_audio: str):
         # 1. Transcription (STT)
         logger.info("Transcribing audio...")
         try:
@@ -35,22 +52,7 @@ class OrchestrationService():
             logger.error(f"Anonymization Error: {e}")
             raise ServiceException(f"Anonymization Error: {e}")
 
-        # 3. Backend Login
-        logger.info(f"Logging in to backend for phone: {phone_number}")
-        try:
-            login_resp = requests.post(
-                f"{BACKEND_SERVICE_URL}/api/patient/login-by-phone-number",
-                json={
-                    "phone_number": phone_number,
-                }
-            )  
-            login_resp.raise_for_status()
-            token = login_resp.json().get("token")
-        except Exception as e:
-            logger.error(f"Backend Login Error: {e}")
-            raise ServiceException(f"Backend Login Error: {e}")
-
-        # 4. Create Note
+        # 3. Create Note
         logger.info("Creating note in backend...")
         try:
             note_resp = requests.post(

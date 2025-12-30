@@ -2,7 +2,6 @@ from pydantic import BaseModel
 
 class GreetRequest(BaseModel):
     phone_number: str
-    password: str
 
 class GreetResponse(BaseModel):
     status: str
