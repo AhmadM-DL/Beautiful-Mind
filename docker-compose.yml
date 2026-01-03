@@ -62,9 +62,25 @@ services:
     secrets:
       - meta_api_key
       - whatsapp_id
-    depends_on:
-      - ai
-      - backend
+    # no start up dependency
+    # connects with ai, backend, and whatsapp
+
+  whatsapp:
+    build:
+      context: ./whatsapp
+    ports:
+      - "8003:8000"
+    environment:
+      - ORCHESTRATOR_SERVICE_URL=http://orchestrator:8000
+      - META_API_KEY_FILE=/run/secrets/meta_api_key
+      - META_HANDSHAKE_SECRET=/run/secrets/meta_handshake_secret
+      - META_WHATSAPP_ID=/run/secrets/meta_whatsapp_id
+    secrets:
+      - meta_api_key
+      - meta_handshake_secret
+      - meta_whatsapp_id
+    # no start up dependency
+    # connects with orchestrator
 
 secrets:
   openai_api_key:
@@ -73,6 +89,11 @@ secrets:
     file: ./secrets/meta_api_key.txt
   whatsapp_id:
     file: ./secrets/whatsapp_id.txt
+  meta_handshake_secret:
+    file: ./secrets/meta_handshake_secret.txt
+  meta_whatsapp_id:
+    file: ./secrets/meta_whatsapp_id.txt
+
 volumes:
   postgres_data:
 
