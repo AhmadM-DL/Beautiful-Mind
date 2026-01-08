@@ -57,11 +57,10 @@ services:
     environment:
       - AI_SERVICE_URL=http://ai:8000
       - BACKEND_SERVICE_URL=http://backend:8000
-      - META_API_KEY_FILE=/run/secrets/meta_api_key
-      - WHATSAPP_ID=/run/secrets/whatsapp_id
+      - WHATSAPP_SERVICE_URL=http://whatsapp:8000
+      - META_HANDSHAKE_SECRET=/run/secrets/meta_handshake_secret
     secrets:
-      - meta_api_key
-      - whatsapp_id
+      - meta_handshake_secret
     # no start up dependency
     # connects with ai, backend, and whatsapp
 
@@ -87,8 +86,6 @@ secrets:
     file: ./secrets/openai_api_key.txt
   meta_api_key:
     file: ./secrets/meta_api_key.txt
-  whatsapp_id:
-    file: ./secrets/whatsapp_id.txt
   meta_handshake_secret:
     file: ./secrets/meta_handshake_secret.txt
   meta_whatsapp_id:

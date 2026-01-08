@@ -1,39 +1,32 @@
-from src.config import META_API_KEY, WHATSAPP_ID
+from src.config import WHATSAPP_SERVICE_URL, META_HANDSHAKE_SECRET
 from src.exceptions import ServiceException
 import requests
 
 from logging import getLogger
 logger = getLogger(__name__)
 
-VERSION= "v24.0"
-
 class MetaService():
-    def __init__(self, api_key, whatsapp_id):
-        self.api_key = api_key
-        self.whatsapp_id = whatsapp_id
+    def __init__(self, whatsapp_service_url, handshake_secret):
+        self.whatsapp_service_url = whatsapp_service_url
+        self.handshake_secret = handshake_secret
     
-    def send_message(self, phone_number, message):
-        url = f"https://graph.facebook.com/{VERSION}/{self.whatsapp_id}/messages"
+    def greet_patient(self, phone_number, password, greeting_url):
+        url = f"{self.whatsapp_service_url}/greet_patient"
         headers = {
-            "Authorization": f"Bearer {self.api_key}",
+            "Authorization": f"Bearer {self.handshake_secret}",
             "Content-Type": "application/json"
         }
         data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": phone_number,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": message
-            }
+            "phone_number": phone_number,
+            "url": greeting_url,
+            "password": password,
         }
         try:
             response = requests.post(url, headers=headers, json=data)
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            logger.error(f"Failed to send message: {str(e)}")
-            raise ServiceException(f"Failed to send message: {str(e)}")
+            logger.error(f"Failed to greet patient: {str(e)}")
+            raise ServiceException(f"Failed to greet patient: {str(e)}")
 
-meta_service = MetaService(META_API_KEY, WHATSAPP_ID)
+meta_service = MetaService(WHATSAPP_SERVICE_URL, META_HANDSHAKE_SECRET)
