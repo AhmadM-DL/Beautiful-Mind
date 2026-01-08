@@ -12,7 +12,7 @@ app = FastAPI(title="Orchestrator Service")
 @app.post("/greet_patient", response_model=EmptyResponse)
 async def greet_patient(request: GreetRequest):
     try:
-        meta_service.greet_patient(request.phone_number, request.password, request.url)
+        meta_service.greet_patient(request.phone_number, request.password)
     except Exception as e:
         logger.error(f"Error greeting patient: {e}")
         raise HTTPException(status_code=500)

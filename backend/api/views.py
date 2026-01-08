@@ -4,6 +4,9 @@ from rest_framework import status, permissions, generics
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate, get_user_model
 from .models import Doctor, Patient, Note, hash_phone
+from .validators import validate_phone_number
+from services.orchestrator_services import orchestrator_service
+from services.exceptions import ServiceException
 from django.db.models import Q
 from .serializers import *
 import shortuuid
@@ -120,6 +123,10 @@ class DoctorCreateUpdatePatientView(APIView):
         serializer = PatientSerializer(data=patient_data)
 
         if serializer.is_valid():
+            try:
+                orchestrator_service.greet_patient(phone_number, password)
+            except ServiceException as e:
+                return Response({'status': 'Error greeting patient'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             patient = serializer.save(user=user)
             request.user.doctor_profile.patients.add(patient)
             return Response({'status': 'Patient created'}, status=status.HTTP_201_CREATED)

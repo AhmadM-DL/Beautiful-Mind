@@ -37,11 +37,10 @@ def test_greet_patient_success(mock_greet_patient):
     payload = {
         "phone_number": "1234567890",
         "password": "Hello",
-        "url": "http://url.com"
     }
     response = client.post("/greet_patient", json=payload)
     assert response.status_code == 200
-    mock_greet_patient.assert_called_once_with(payload["phone_number"], payload["password"], payload["url"])
+    mock_greet_patient.assert_called_once_with(payload["phone_number"], payload["password"])
 
 @pytest.mark.unit
 @patch("app.meta_service.greet_patient")
@@ -49,8 +48,7 @@ def test_greet_patient_failure(mock_greet_patient):
     mock_greet_patient.side_effect = Exception("Greet Patient failed")
     payload = {
         "phone_number": "1234567890",
-        "password": "Hello",
-        "url": "http://url.com"
+        "password": "Hello"
     }
     response = client.post("/greet_patient", json=payload)
     assert response.status_code == 500

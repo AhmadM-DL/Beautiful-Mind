@@ -16,8 +16,11 @@ services:
       - DB_PASSWORD=postgres
       - DB_HOST=db
       - DB_PORT=5432
+      - ORCHESTRATOR_SERVICE_URL=http://orchestrator:8000
     depends_on:
       - db
+    # connsects to orchestrator
+
   frontend:
     build:
       context: ./frontend
@@ -59,6 +62,7 @@ services:
       - BACKEND_SERVICE_URL=http://backend:8000
       - WHATSAPP_SERVICE_URL=http://whatsapp:8000
       - META_HANDSHAKE_SECRET=/run/secrets/meta_handshake_secret
+      - APP_DOMAIN=http://domain.com
     secrets:
       - meta_handshake_secret
     # no start up dependency

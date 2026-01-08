@@ -109,4 +109,7 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+# SERVICES
+ORCHESTRATOR_SERVICE_URL = os.environ.get('ORCHESTRATOR_SERVICE_URL', 'http://orchestrator:8000')
+
 AUTH_USER_MODEL = 'api.User'
