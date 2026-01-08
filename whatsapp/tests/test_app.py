@@ -16,7 +16,7 @@ def test_greet_patient_success(mock_meta):
         }
     response = client.post("/greet_patient", json=payload, headers=headers)
     assert response.status_code == 200
-    assert mock_meta.send_template_message.call_count == 2
+    assert mock_meta.send_template_message.call_count == 1
 
 def test_greet_patient_unauthorized():
     payload = {

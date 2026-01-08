@@ -16,8 +16,7 @@ def token_bearer(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer(
 @app.post("/greet_patient", response_model=EmptyResponse)
 def greet_patient(request: GreetRequest, token: str = Depends(token_bearer)):
     try:
-        meta_service.send_template_message(request.phone_number, "greet_patient", "ar", {"domain": request.url})
-        meta_service.send_template_message(request.phone_number, "share_password", "ar", {"password": request.password})
+        meta_service.send_template_message(request.phone_number, "greet_patient", "ar", {"domain": request.url, "code": request.password})
         return EmptyResponse()
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
