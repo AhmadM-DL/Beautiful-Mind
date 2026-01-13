@@ -13,5 +13,6 @@ urlpatterns = [
 
     path('patient/login-by-phone-number', PatientLoginByPhoneNumberView.as_view(), name='patient_login_by_phone_number'),
     path('patient/add-note', AddNoteView.as_view(), name='add_note'),
+    path('patient/get-notes', GetNotesView.as_view(), name='get_notes'),
 ]
 

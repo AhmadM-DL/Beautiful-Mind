@@ -48,6 +48,9 @@ class DoctorRegistrationSerializer(serializers.ModelSerializer):
         model = Doctor
         fields = ["username", "first_name", "last_name", "phone_number", "password"]
 
+    def validate_phone_number(self, value):
+        return validate_phone_number(value)
+    
     def create(self, validated_data):
         password = validated_data.pop("password")
         username = validated_data.pop("username")
@@ -69,4 +72,5 @@ class DoctorRegistrationSerializer(serializers.ModelSerializer):
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
-        fields = ['note']
+        fields = ['note', 'create_date']
+        

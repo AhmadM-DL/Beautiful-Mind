@@ -64,4 +64,9 @@ export const updatePatient = async (data) => {
     return response.data;
 };
 
+export const getNotes = async () => {
+    const response = await api.get('/patient/get-notes');
+    return response.data;
+};
+
 export default api;

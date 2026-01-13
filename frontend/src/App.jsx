@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem('access_token');
     const role = localStorage.getItem('user_role');
 
-    if (!token || role !== 'DOCTOR') {
+    if (!token || (role !== 'DOCTOR' && role !== 'PATIENT')) {
         return <Navigate to="/" replace />;
     }
 
@@ -21,7 +21,7 @@ const LoginRoute = () => {
     const token = localStorage.getItem('access_token');
     const role = localStorage.getItem('user_role');
 
-    if (token && role === 'DOCTOR') {
+    if (token && (role === 'DOCTOR' || role === 'PATIENT')) {
         return <Navigate to="/dashboard" replace />;
     }
 

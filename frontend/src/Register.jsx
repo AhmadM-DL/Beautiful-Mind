@@ -25,7 +25,7 @@ const Register = () => {
         try {
             const dataToSubmit = {
                 ...formData,
-                phone_number: countryCode + formData.phone_number
+                phone_number: countryCode.replace('+', '') + formData.phone_number
             };
             await registerDoctor(dataToSubmit);
             navigate('/');

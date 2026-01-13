@@ -15,10 +15,10 @@ const Login = () => {
         try {
             const data = await login(identifier, password);
             // Check if the user is a doctor
-            if (data.role === 'DOCTOR') {
+            if (data.role === 'DOCTOR' || data.role === 'PATIENT') {
                 navigate('/dashboard');
             } else {
-                setError('Only doctors can access this portal');
+                setError('Access denied');
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('user_role');
                 localStorage.removeItem('username');

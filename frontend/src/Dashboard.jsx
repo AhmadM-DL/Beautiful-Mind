@@ -3,10 +3,28 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPatients, createPatient, updatePatient } from './api';
 import CountryCodeSelect from './CountryCodeSelect';
+import PatientView from './PatientView';
 import './Dashboard.css';
 
 const Dashboard = () => {
+    const role = localStorage.getItem('user_role');
     const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user_role');
+        localStorage.removeItem('username');
+        navigate('/');
+    };
+
+    if (role === 'PATIENT') {
+        return <PatientView onLogout={handleLogout} />;
+    }
+
+    return <DoctorDashboard handleLogout={handleLogout} />;
+};
+
+const DoctorDashboard = ({ handleLogout }) => {
     const [patients, setPatients] = useState([]);
     const [isAddMode, setIsAddMode] = useState(false);
     const [editingPatient, setEditingPatient] = useState(null); // null means no patient selected for edit
@@ -38,13 +56,6 @@ const Dashboard = () => {
         } catch (err) {
             console.error(err);
         }
-    };
-
-    const handleLogout = () => {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('username');
-        navigate('/');
     };
 
     const handleInputChange = (e) => {
@@ -103,7 +114,7 @@ const Dashboard = () => {
 
         // Concatenate country code with phone number for new patients
         if (isAddMode && cleanData.patient_phone_number) {
-            cleanData.patient_phone_number = countryCode + cleanData.patient_phone_number;
+            cleanData.patient_phone_number = countryCode.replace('+', '') + cleanData.patient_phone_number;
         }
 
         try {

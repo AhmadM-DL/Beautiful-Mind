@@ -80,6 +80,14 @@ class AddNoteView(APIView):
             return Response({'status': 'Note added'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class GetNotesView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        if not hasattr(request.user, 'patient_profile'):
+            return Response({'error': 'Not a patient'}, status=status.HTTP_403_FORBIDDEN)
+        notes = Note.objects.filter(patient=request.user.patient_profile)
+        serializer = NoteSerializer(notes, many=True)
+        return Response(serializer.data)
 # Doctor
 
 class DoctorRegisterView(APIView):
