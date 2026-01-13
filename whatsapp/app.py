@@ -5,6 +5,9 @@ from src.meta_service import meta_service
 from src.orchestrator_service import orchestrator_service
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
+from logging import getLogger
+logger = getLogger(__name__)
+
 app = FastAPI(title="WhatsApp Service")
 
 def token_bearer(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
@@ -29,7 +32,7 @@ def webhook(notificaion: WhatsappNotificationRequest):
     except Exception as e:
         return EmptyResponse()
     # Is voice note
-    if message.type == "audio" and message.audio.voice == "true":
+    if message.type == "audio" and message.audio.voice:
         audio_url = message.audio.url
         try:
             base64_audio = meta_service.get_media_as_base64(audio_url)

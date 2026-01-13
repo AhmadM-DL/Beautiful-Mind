@@ -24,6 +24,7 @@ class AnonymizerService:
             "each containing 'text' (the original name) and 'type' for types person and place use the language of the text"
             "For example if the text is in Arabic return the type in Arabic"
             'If no entities are found, return {"entities": []}.\n\n'
+            "Don't add markdown formattting using ```json or ```"
             f"Text: {text}"
         )
 

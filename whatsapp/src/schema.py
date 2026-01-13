@@ -20,7 +20,7 @@ class ImageMessage(BaseModel):
 class AudioMessage(BaseModel):
     id: str
     url: str
-    voice: str
+    voice: bool
     mime_type: Optional[str] = None
 
 class VideoMessage(BaseModel):

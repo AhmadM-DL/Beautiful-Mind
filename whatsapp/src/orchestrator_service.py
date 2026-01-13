@@ -10,7 +10,7 @@ class OrchestratorService:
         self.base_url = orchestrator_service_url
     
     def process_voice_note(self, phone_number: str, base64_audio: str):
-        url = f"{self.base_url}/process_voice_note"
+        url = f"{self.base_url}/process_patient_note"
         payload = {
             "phone_number": phone_number,
             "base64_audio": base64_audio
