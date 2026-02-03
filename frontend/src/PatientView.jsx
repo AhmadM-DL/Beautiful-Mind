@@ -192,12 +192,14 @@ const PatientView = ({ onLogout }) => {
                             {stats.hourly.map((count, hour) => {
                                 const max = Math.max(...stats.hourly, 1);
                                 return (
-                                    <div
-                                        key={hour}
-                                        className="chart-bar"
-                                        style={{ height: `${(count / max) * 100}%` }}
-                                        data-label={`${hour}:00 - ${count} notes`}
-                                    ></div>
+                                    <div key={hour} className="chart-column">
+                                        <div
+                                            className="chart-bar"
+                                            style={{ height: `${(count / max) * 100}%` }}
+                                            data-label={`${hour}:00 - ${count} notes`}
+                                        ></div>
+                                        <div className="chart-tick">{hour}</div>
+                                    </div>
                                 );
                             })}
                         </div>
@@ -206,15 +208,17 @@ const PatientView = ({ onLogout }) => {
                     <div className="chart-section">
                         <h3>Monthly Frequency (Avg)</h3>
                         <div className="simple-chart">
-                            {['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'].map((m, i) => {
+                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m, i) => {
                                 const max = Math.max(...stats.monthly, 1);
                                 return (
-                                    <div
-                                        key={i}
-                                        className="chart-bar"
-                                        style={{ height: `${(stats.monthly[i] / max) * 100}%` }}
-                                        data-label={`${m} - ${stats.monthly[i].toFixed(1)} avg`}
-                                    ></div>
+                                    <div key={i} className="chart-column">
+                                        <div
+                                            className="chart-bar"
+                                            style={{ height: `${(stats.monthly[i] / max) * 100}%` }}
+                                            data-label={`${m} - ${stats.monthly[i].toFixed(1)} avg`}
+                                        ></div>
+                                        <div className="chart-tick">{m}</div>
+                                    </div>
                                 );
                             })}
                         </div>

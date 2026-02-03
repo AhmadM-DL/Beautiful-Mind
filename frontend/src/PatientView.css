@@ -131,14 +131,34 @@
     display: flex;
     align-items: flex-end;
     gap: 5px;
+    margin-bottom: 25px; /* Space for ticks */
+}
+
+.chart-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    position: relative;
 }
 
 .chart-bar {
     background: #000;
-    flex: 1;
-    min-width: 10px;
+    width: 100%;
+    min-width: 2px;
     transition: height 0.3s;
     position: relative;
+}
+
+.chart-tick {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    color: #888;
+    white-space: nowrap;
 }
 
 .chart-bar:hover::after {
