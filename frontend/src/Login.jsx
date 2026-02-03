@@ -41,7 +41,7 @@ const Login = () => {
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
-                            placeholder="Phone number or username"
+                            placeholder="Phone number (cccxxxxxxxx) or username"
                             required
                         />
                     </div>
