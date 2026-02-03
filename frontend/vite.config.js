@@ -9,6 +9,10 @@ export default defineConfig({
         port: 5173,
         watch: {
             usePolling: true
-        }
+        },
+        allowedHosts: [
+            'beautifulmind.health',
+            'www.beautifulmind.health'
+        ]
     }
 })
