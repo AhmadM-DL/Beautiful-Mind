@@ -22,4 +22,4 @@ cp ./nginx/nginx.main.conf ./nginx/nginx.conf
 echo "Stopping all services..."
 docker compose down
 
-echo "Done! You can now run 'docker-compose up -d' to start the full stack with SSL."
+echo "Done! You can now run 'docker compose up -d' to start the full stack with SSL."
