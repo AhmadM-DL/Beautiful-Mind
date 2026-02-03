@@ -10,6 +10,14 @@ SECRET_KEY = 'django-insecure--(%3l3r&ex1!sx!w_e9o8*+!&oywo_q2px76bnz822trb$##*q
 PHONE_HASH_SECRET = os.environ.get('PHONE_HASH_SECRET', 'super-secret-phone-hash-key')
 DEBUG = True
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    "https://beautifulmind.health",
+]
+
+# Configure SECURE_PROXY_SSL_HEADER when behind a reverse proxy terminating SSL
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 # Application definition
 INSTALLED_APPS = [
