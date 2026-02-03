@@ -5,6 +5,7 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
+      - static_volume:/app/staticfiles
     ports:
       - "8000:8000"
     environment:
@@ -95,6 +96,7 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - webroot:/var/www/certbot
+      - static_volume:/var/www/static:ro
     depends_on:
       - frontend
       - whatsapp
@@ -130,5 +132,6 @@ volumes:
   certbot-etc:
   certbot-var:
   webroot:
+  static_volume:
 
 
