@@ -65,9 +65,14 @@ const PatientView = ({ onLogout }) => {
     }, [notes, filter, customRange]);
 
     const stats = useMemo(() => {
-        if (filteredNotes.length === 0) return { hourly: [], monthly: [], avgLength: 0 };
+        const emptyHourly = Array(24).fill(0);
+        const emptyMonthly = Array(12).fill(0);
 
-        const hourly = Array(24).fill(0);
+        if (filteredNotes.length === 0) {
+            return { hourly: emptyHourly, monthly: emptyMonthly, avgLength: 0 };
+        }
+
+        const hourly = [...emptyHourly];
         const monthlyData = {};
         let totalLength = 0;
 
@@ -81,10 +86,10 @@ const PatientView = ({ onLogout }) => {
             monthlyData[month].sum += 1;
             monthlyData[month].years.add(year);
 
-            totalLength += noteItem.note ? noteItem.note.length : 0;
+            totalLength += (noteItem.note ? String(noteItem.note).length : 0);
         });
 
-        const monthly = Array(12).fill(0).map((_, i) => {
+        const monthly = emptyMonthly.map((_, i) => {
             if (monthlyData[i]) {
                 return monthlyData[i].sum / monthlyData[i].years.size;
             }
@@ -158,7 +163,7 @@ const PatientView = ({ onLogout }) => {
                     {filteredNotes.map((noteItem, index) => (
                         <div key={index} className="note-item">
                             <div className="note-summary" onClick={() => toggleExpand(index)}>
-                                <span>{noteItem.note.substring(0, 50)}{noteItem.note.length > 50 ? '...' : ''}</span>
+                                <span>{(noteItem.note || "").substring(0, 50)}{(noteItem.note || "").length > 50 ? '...' : ''}</span>
                                 <span className="arrow">{expandedNoteId === index ? '▲' : '▼'}</span>
                             </div>
                             {expandedNoteId === index && (
