@@ -251,10 +251,61 @@ h2 {
 
 /* Footer */
 footer {
-    padding: 2rem 10%;
+    padding: 4rem 10% 2rem;
     text-align: center;
     border-top: 1px solid var(--border);
     color: var(--text-muted);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--text);
+}
+
+/* Legal Section */
+.legal-section {
+    background-color: rgba(15, 23, 42, 0.3);
+}
+
+.legal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.legal-card {
+    padding: 2rem;
+    border-left: 2px solid var(--border);
+    transition: border-color 0.3s;
+}
+
+.legal-card:hover {
+    border-left-color: #60a5fa;
+}
+
+.legal-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #f1f5f9;
+}
+
+.legal-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
 }
 
 @media (max-width: 968px) {
