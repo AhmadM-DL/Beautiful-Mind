@@ -1,15 +1,14 @@
 :root {
-    --primary: #f8fafc;
+    --primary: #3b82f6;
     --secondary: #64748b;
-    --accent: #334155;
-    --text: #f1f5f9;
-    --text-muted: #94a3b8;
-    --bg-dark: #020617;
-    /* Deep slate/neutral dark */
-    --bg-card: #0f172a;
-    /* Slightly lighter slate for cards */
-    --border: rgba(255, 255, 255, 0.08);
-    --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    --accent: #1e293b;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --bg-dark: #ffffff;
+    --bg-card: #ffffff;
+    --bg-alt: #f8fafc;
+    --border: rgba(0, 0, 0, 0.06);
+    --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
     --font-main: 'Outfit', sans-serif;
 }
 
@@ -69,8 +68,8 @@ nav {
     width: 100%;
     top: 0;
     z-index: 1000;
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border);
 }
 
@@ -84,15 +83,13 @@ nav {
 
 .aub-logo {
     height: 40px;
-    filter: brightness(0) invert(1);
-    /* Make it white for dark theme if needed, or keep original */
+    /* Removed invert filter to show original colors or dark version */
 }
 
 .project-name {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
-    /* Set to white as requested */
+    color: var(--text);
 }
 
 .nav-links {
@@ -118,9 +115,8 @@ nav {
     align-items: center;
     justify-content: space-between;
     padding: 0 10%;
-    background: radial-gradient(circle at top right, rgba(30, 58, 138, 0.3), transparent);
+    background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent);
     padding-top: 140px;
-    /* Increased to avoid overlap with nav */
 }
 
 .hero-content {
@@ -167,7 +163,7 @@ nav {
 .hero-image img {
     max-width: 90%;
     border-radius: 2rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15);
     animation: float 6s ease-in-out infinite;
 }
 
@@ -199,13 +195,12 @@ h2 {
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.12);
 }
 
 .card i {
     font-size: 2rem;
-    color: #94a3b8;
-    /* Switched from neon to soft slate */
+    color: var(--primary);
     margin-bottom: 1.5rem;
     display: block;
 }
@@ -236,17 +231,33 @@ h2 {
 
 .email-link {
     font-size: 2rem;
-    color: #00d2ff;
+    color: var(--primary);
     text-decoration: none;
     font-weight: 700;
     transition: all 0.3s;
-    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5), 0 0 20px rgba(0, 210, 255, 0.3);
+    position: relative;
+    display: inline-block;
+}
+
+.email-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.email-link:hover::after {
+    transform: scaleX(1);
 }
 
 .email-link:hover {
-    color: #ffffff;
-    text-shadow: 0 0 15px rgba(0, 210, 255, 1), 0 0 30px rgba(0, 210, 255, 0.8);
-    transform: scale(1.05);
+    color: #1d4ed8;
+    transform: scale(1.02);
 }
 
 /* Footer */
@@ -277,35 +288,79 @@ footer {
 
 /* Legal Section */
 .legal-section {
-    background-color: rgba(15, 23, 42, 0.3);
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+}
+
+.legal-section h2 {
+    margin-bottom: 4rem;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.legal-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
 }
 
 .legal-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
 }
 
 .legal-card {
-    padding: 2rem;
-    border-left: 2px solid var(--border);
-    transition: border-color 0.3s;
+    padding: 3rem 2.5rem;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.legal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+    opacity: 0.15;
+    transition: opacity 0.3s;
 }
 
 .legal-card:hover {
-    border-left-color: #60a5fa;
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+.legal-card:hover::before {
+    opacity: 1;
 }
 
 .legal-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: #f1f5f9;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
 }
 
 .legal-card p {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.7;
+    font-weight: 300;
 }
 
 @media (max-width: 968px) {
