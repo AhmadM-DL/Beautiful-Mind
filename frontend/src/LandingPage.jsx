@@ -24,13 +24,7 @@ const LandingPage = () => {
                     <a href="#about" className="btn">Learn More</a>
                 </div>
                 <div className="hero-image">
-                    <div className="abstract-brain-viz">
-                        <div className="node n1"></div>
-                        <div className="node n2"></div>
-                        <div className="node n3"></div>
-                        <div className="node n4"></div>
-                        <div className="pulse"></div>
-                    </div>
+                    <img src="/hero.png" alt="Abstract Brain Visualization" />
                 </div>
             </header>
 
