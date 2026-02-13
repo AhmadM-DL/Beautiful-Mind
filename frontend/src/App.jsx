@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
+import LandingPage from './LandingPage';
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -34,6 +35,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<LoginRoute />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/info" element={<LandingPage />} />
                 <Route
                     path="/dashboard"
                     element={

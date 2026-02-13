@@ -65,6 +65,15 @@ const Login = () => {
                         </button>
                     </div>
                 </form>
+                <div style={{ marginTop: '20px', fontSize: '0.9rem' }}>
+                    <button
+                        type="button"
+                        className="btn-text"
+                        onClick={() => navigate('/info')}
+                    >
+                        Learn more about the project
+                    </button>
+                </div>
             </div>
         </div>
     );
