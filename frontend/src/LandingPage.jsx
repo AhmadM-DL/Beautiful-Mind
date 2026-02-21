@@ -11,7 +11,6 @@ const LandingPage = () => {
             <nav>
                 <div className="logo-container">
                     <span className="project-name">Beautiful Mind</span>
-                    <div className="aub-logo-placeholder">AUB</div>
                 </div>
             </nav>
 
@@ -84,9 +83,7 @@ const LandingPage = () => {
                     </div>
                     <div className="legal-card">
                         <h3>Data Usage & Security</h3>
-                        <p>All data is processed using state-of-the-art anonymization techniques. Audio files are stored
-                            securely and accessed only by authorized research personnel. We do not sell or share individual data
-                            with third parties.</p>
+                        <p>All data is processed using state-of-the-art anonymization techniques to ensure participant privacy and confidentiality. Audio files are stored securely using industry-standard protection measures and are accessible only to authorized research personnel. Audio processing is performed through OpenAI APIs in accordance with applicable data protection standards. We do not sell, trade, or share any individual-level data with third parties under any circumstances.</p>
                     </div>
                     <div className="legal-card">
                         <h3>Medical Disclaimer</h3>
