@@ -39,6 +39,7 @@ const PatientView = ({ onLogout }) => {
     };
 
     const filteredNotes = useMemo(() => {
+        if (!Array.isArray(notes)) return [];
         const now = new Date();
         return notes.filter(noteItem => {
             const noteDate = new Date(noteItem.create_date);
