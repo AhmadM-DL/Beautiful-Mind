@@ -24,7 +24,8 @@ def greet_patient(request: GreetRequest, token: str = Depends(token_bearer)):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@app.post("/webhook", response_model=EmptyResponse)
+@app.post("/webhook")
+@app.post("/webhook/")
 def webhook(notificaion: WhatsappNotificationRequest):
     # Is message notification
     try:
@@ -47,6 +48,7 @@ def webhook(notificaion: WhatsappNotificationRequest):
 
 
 @app.get("/webhook")
+@app.get("/webhook/")
 def webhook_handshake(
     mode: str = Query(None, alias="hub.mode"),
     verify_token: str = Query(None, alias="hub.verify_token"),
