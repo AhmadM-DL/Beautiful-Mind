@@ -113,3 +113,41 @@ select,
 textarea {
   background-color: #fff;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 15px;
+  }
+
+  .dashboard-container header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .patient-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-form-grid .full-width,
+  .patient-form-grid .form-row {
+    grid-column: span 1;
+  }
+
+  .patient-form-grid .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .patient-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

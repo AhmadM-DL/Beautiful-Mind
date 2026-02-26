@@ -136,3 +136,48 @@ textarea:focus {
   margin-bottom: 15px;
   font-size: 0.9rem;
 }
+
+.input-note {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+
+  .login-container,
+  .register-container {
+    padding: 20px;
+    height: auto;
+    min-height: 100vh;
+    justify-content: flex-start;
+    padding-top: 80px;
+  }
+
+  .login-header {
+    left: 20px;
+    top: 20px;
+  }
+
+  .login-box,
+  .register-box {
+    padding: 20px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-group button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .btn-secondary {
+    margin-left: 0;
+  }
+}

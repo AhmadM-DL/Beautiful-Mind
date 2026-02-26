@@ -131,7 +131,8 @@
     display: flex;
     align-items: flex-end;
     gap: 5px;
-    margin-bottom: 25px; /* Space for ticks */
+    margin-bottom: 25px;
+    /* Space for ticks */
 }
 
 .chart-column {
@@ -194,4 +195,56 @@
 
 .custom-dates input {
     width: auto;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .patient-view-container {
+        padding: 15px;
+    }
+
+    .patient-view-container header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .tabs-container {
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        width: 100%;
+    }
+
+    .tab-btn {
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+
+    .filters-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters-row select {
+        width: 100%;
+    }
+
+    .custom-dates {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .custom-dates input {
+        width: 100%;
+    }
+
+    .stat-card .value {
+        font-size: 1.5rem;
+    }
+
+    .note-summary {
+        font-size: 0.9rem;
+        padding: 12px 15px;
+    }
 }

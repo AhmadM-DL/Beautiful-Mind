@@ -41,9 +41,10 @@ const Login = () => {
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
-                            placeholder="Phone number (cccxxxxxxxx) or username"
+                            placeholder="Phone/Username"
                             required
                         />
+                        <p className="input-note">* phone number with country code example 96171100100</p>
                     </div>
                     <div className="form-group">
                         <input
