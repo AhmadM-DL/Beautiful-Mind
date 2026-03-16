@@ -45,6 +45,16 @@ def test_get_media_as_base64_success(mock_get):
     })
 
 @patch("src.meta_service.requests.post")
+def test_send_message_success(mock_post):
+    mock_response = MagicMock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {"success": True}
+    mock_post.return_value = mock_response
+    response = meta_service.send_message("123456789", "test")
+    assert response["success"] is True
+    mock_post.assert_called_once()
+
+@patch("src.meta_service.requests.post")
 def test_send_template_message_failure(mock_post):
     mock_response = mock_post.return_value
     mock_response.raise_for_status.side_effect = Exception("Service Down")
@@ -64,3 +74,10 @@ def test_get_media_as_base64_failure(mock_get):
     mock_response.raise_for_status.side_effect = Exception("Service Down")
     with pytest.raises(ServiceException) as excinfo:
         meta_service.get_media_as_base64("http://media.url")
+
+@patch("src.meta_service.requests.post")
+def test_send_message_failure(mock_post):
+    mock_response = mock_post.return_value
+    mock_response.raise_for_status.side_effect = Exception("Service Down")
+    with pytest.raises(ServiceException) as excinfo:
+        meta_service.send_message("123456789", "test")

@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, ANY
 from app import app
 from src.config import META_HANDSHAKE_SECRET
 
@@ -40,9 +40,10 @@ def test_webhook_handshake_success():
 # fix order
 @patch("app.meta_service")
 @patch("app.orchestrator_service")
-def test_webhook_audio_message(mock_orch, mock_meta):
+@patch("app.response_messages_service")
+def test_webhook_audio_message(mock_response, mock_orch, mock_meta):
     mock_meta.get_media_as_base64.return_value = "base64audio"
-    
+    mock_response.get_message.return_value = "Thank you for your message"
     payload = {
             "object": "whatsapp_business_account",
             "entry": [{
@@ -74,6 +75,8 @@ def test_webhook_audio_message(mock_orch, mock_meta):
     mock_meta.get_media_as_base64.assert_called_with("http://audio.url")
     mock_orch.process_voice_note.assert_called_with("123456789", "base64audio")
     mock_meta.send_thumbs_up.assert_called_with("123456789", "msg_id")
+    mock_response.get_message.assert_called_once()
+    mock_meta.send_message.assert_called_with("123456789", "Thank you for your message")
 
 def test_webhook_no_messages():
     payload = {

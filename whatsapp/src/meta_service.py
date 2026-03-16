@@ -76,6 +76,29 @@ class MetaService:
             logger.error(f"Failed to send thumbs up: {str(e)}")
             raise ServiceException(f"Failed to send thumbs up: {str(e)}")
 
+    def send_message(self, phone_number: str, message: str):
+        url = f"https://graph.facebook.com/{VERSION}/{self.meta_whatsapp_id}/messages"
+        payload = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": phone_number,
+            "type": "text",
+            "text": {
+                "body": message
+            }
+        }
+        headers = {
+            "Authorization": f"Bearer {self.meta_api_key}",
+            "Content-Type": "application/json"
+        }
+        try:
+            response = requests.post(url, json=payload, headers=headers)
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            logger.error(f"Failed to send message: {str(e)}")
+            raise ServiceException(f"Failed to send message: {str(e)}")
+
     def get_media_as_base64(self, media_url: str):
         headers = {
             "Authorization": f"Bearer {self.meta_api_key}",

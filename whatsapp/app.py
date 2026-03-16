@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Response, Depends, status, Query
 from src.schema import WhatsappNotificationRequest, EmptyResponse, GreetRequest
 from src.config import META_HANDSHAKE_SECRET
 from src.meta_service import meta_service
+from src.messages_service import response_messages_service
 from src.orchestrator_service import orchestrator_service
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
@@ -42,7 +43,9 @@ def webhook(notificaion: WhatsappNotificationRequest):
             return EmptyResponse()
         try:
             meta_service.send_thumbs_up(message.from_, message.id)
-        except Exception as e:
+            response_message = response_messages_service.get_message()
+            meta_service.send_message(message.from_, response_message)
+        except Exception as e:  
             return EmptyResponse()
     return EmptyResponse()
 
