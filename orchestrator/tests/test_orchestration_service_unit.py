@@ -27,7 +27,7 @@ def test_login_success(mock_requests_post):
     result = orchestration_service.login_by_phone(PHONE_NUMBER)
     assert result == TOKEN
     mock_requests_post.assert_called_once_with(
-        f"{BACKEND_SERVICE_URL}/api/patient/login-by-phone-number",
+        f"{BACKEND_SERVICE_URL}/patient/login-by-phone-number",
         json={"phone_number": PHONE_NUMBER}
     )
 

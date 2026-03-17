@@ -12,7 +12,7 @@ class OrchestrationService():
         logger.info("Login attempt...")
         try:
             login_resp = requests.post(
-                f"{BACKEND_SERVICE_URL}/api/patient/login-by-phone-number",
+                f"{BACKEND_SERVICE_URL}/patient/login-by-phone-number",
                 json={
                     "phone_number": phone_number,
                 }
@@ -56,7 +56,7 @@ class OrchestrationService():
         logger.info("Creating note in backend...")
         try:
             note_resp = requests.post(
-                f"{BACKEND_SERVICE_URL}/api/patient/add-note",
+                f"{BACKEND_SERVICE_URL}/patient/add-note",
                 json={"note": anonymized_text},
                 headers={"Authorization": f"Bearer {token}"}
             )
