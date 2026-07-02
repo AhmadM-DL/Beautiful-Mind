@@ -34,7 +34,6 @@ under **Application Secrets** (or set them as environment variables):
 ## Run
 
 ```bash
-cd streamlit_app
 pip install -r requirements.txt
 streamlit run app.py
 ```
@@ -42,7 +41,7 @@ streamlit run app.py
 Or with Docker:
 
 ```bash
-docker build -t beautifulmind-streamlit streamlit_app
+docker build -t beautifulmind-streamlit .
 docker run -p 8501:8501 beautifulmind-streamlit
 ```
 
